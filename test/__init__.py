@@ -7,44 +7,46 @@
 #  B  b  C
 import math
 from decimal import *
+
+def generate_string(char,num):
+    return char * num
+
 def process(var):
     return str(round(var, 2))
 
-def caclamountofspace( strBase, var, div):
+def cacl_amount_of_space(strBase, var, div):
     return strBase[0:max(0, int(len(strBase)-int(len(str(int(round(var*int(10**(abs(Decimal(process(var)).as_tuple().exponent))), 0))))/div)))]
 
-def printtriangle():
+def print_triangle():
     """prints the triangle with values"""
-    strBaseOrginal = "                                                                                                        "
-    strBase = strBaseOrginal[0:max(3, len(process(a))+1)]
-    amountOfLines = len(str(float(process(b))+2-1))
-    print(amountOfLines)
+    str_base = generate_string(" ", max(3, len(process(a))+1))
+    amount_of_lines = len(str(process(b)))+6
+    inner_space_str = generate_string(" ", amount_of_lines)
 
-    print(caclamountofspace(strBase, A, 2) + process(A))
-    for num in range(0, int((amountOfLines/2))):
-        print(strBase+"|"+strBaseOrginal[0:num]+"\\")
+    print(cacl_amount_of_space(str_base, A, 2) + process(A))
+    for num in range(0, int((amount_of_lines/2))):
+        print(str_base+"|"+inner_space_str[:num]+"\\")
 
-    print(str(caclamountofspace(strBase[0:2], a, 1)) + process(a) + " |"+str(strBaseOrginal[0:int(amountOfLines/2)])+"\\ " + process(c))
-    for num in range(int((amountOfLines/2)+1), amountOfLines):
-        print(strBase + "|"+strBaseOrginal[0:num]+"\\")
+    print(str(cacl_amount_of_space(str_base[0:2], a, 1)) + process(a) + " |" + inner_space_str[:int(amount_of_lines / 2)] + "\\ " + process(c))
+    for num in range(int((amount_of_lines/2)+1), amount_of_lines):
+        print(str_base + "|"+inner_space_str[:num]+"\\")
 
-    print(strBase+"|__\\")
+    print(str_base+"|"+generate_string("_", amount_of_lines)+"\\")
+    print(cacl_amount_of_space(str_base, B, 1) + process(B) + "   " + process(b) + "   " + process(C))
 
-    print(caclamountofspace(strBase, B, 1) + process(B) + " " + process(b) + " " + process(C))
     return
 
 
 A = 10.1224213124
-a = 1
-B = 900
-b = 1241342.123123123
-b = 1241342.123123123
-C = 0
-c = 0
+a = 13123.12312
+B = 900.1231
+b = 3.123123123
+C = 123.12312
+c = 123
 # a = c*math.sin(A)
 # a = b/math.tan(A)
 print("Hello World")
 print("Test")
 
 
-printtriangle()
+print_triangle()
