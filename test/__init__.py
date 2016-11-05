@@ -1,5 +1,5 @@
 # --------------------------------------------- #
-
+#
 # Triangle Calculator:
 #
 #   A
@@ -13,8 +13,8 @@
 # set the angles or sides based on their letter
 # C is already set to 90 (right angle)
 values_dict = {
+    "A": 53.13,
     "c": 5,
-    "A": 36.869898,
 }
 #
 # set amount of decimal places in answers
@@ -79,8 +79,6 @@ B = 0
 b = 0
 C = 90
 c = 0
-# a = c*math.sin(A)
-# a = b/math.tan(A)
 
 
 def solve_triangle(values):
@@ -133,11 +131,18 @@ def solve_triangle(values):
     # checks to see if info given is valid
     for key in values:
         key_value = values.get(key)
-        if key is "C" and key_value is not 90:
+        if key_value < 1:
             # stops program
-            sys.exit("C is a right angle and cannot be set to anything that is not its default: 90")
-        else:
-            define_variable(key, key_value)
+            sys.exit("('" + key + "' = " + str(key_value) + ") cannot be less than 1")
+        if key in angle_names:
+            if key is "C" and key_value is not 90:
+                # stops program
+                sys.exit("C is a right angle and cannot be set to anything that is not its default: 90")
+            elif key_value >= 90:
+                # stops program
+                sys.exit("('" + key + "' = " + str(key_value) + ") must be less than 90")
+
+        define_variable(key, key_value)
 
     # extra validation
     if "c" in solved_sides:
@@ -145,7 +150,10 @@ def solve_triangle(values):
         for var in solved_sides:
             if var is not "c" and solved_sides.get(var) > solved_sides.get(key_list[key_list.index("c")]):
                 sys.exit("('" + var + "' = " + str(solved_sides.get(var)) + ") cannot be greater than the hypotenuse: ('c' = " + str(solved_sides.get(key_list[key_list.index("c")])) + ")")
-
+    if len(solved_sides) is 3:
+        if sum(solved_sides.values()) is not 180:
+            # stops program
+            sys.exit("the sum of the angles must 180")
     # solving logic
     if len(solved_angles) is 2:
         finish_angle_solve()
