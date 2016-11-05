@@ -5,8 +5,20 @@
 # b | \ c
 #   |__\
 #  C  a  B
+#
+# Setup:
+#
+# set amount of decimal places in answers
 amount_of_decimal_places = 2
-
+#
+# set the angles or sides based on their letter
+# C is already set to 90 (right angle)
+values_dict = {
+    "c": 5,
+    "A": 36.869898,
+}
+#
+#
 
 import math
 import sys
@@ -151,6 +163,6 @@ def solve_triangle(values):
     for var in solved_sides:
         globals()[var] = process(solved_sides.get(var))
 
-solve_triangle({"A": 53.13, "c": 5})
+solve_triangle(values_dict)
 print_triangle()
 print("Execution took: %s seconds" % (time.time() - start_time))
