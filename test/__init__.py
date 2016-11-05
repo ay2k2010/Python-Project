@@ -83,7 +83,6 @@ c = 0
 
 def solve_triangle(values):
     """calculates the missing value of the triangle"""
-    value_keys = list(values.keys())
     angle_names = ["C", "B", "A"]
     side_names = ["c", "b", "a"]
     solved_angles = {"C": 90}
@@ -138,13 +137,12 @@ def solve_triangle(values):
         else:
             define_variable(key, key_value)
 
-
+    # extra validation
     if "c" in solved_sides:
         key_list = list(solved_sides.keys())
         for var in solved_sides:
             if var is not "c" and solved_sides.get(var) > solved_sides.get(key_list[key_list.index("c")]):
                 sys.exit("('" + var + "' = " + str(solved_sides.get(var)) + ") cannot be greater than the hypotenuse: ('c' = " + str(solved_sides.get(key_list[key_list.index("c")])) + ")")
-
 
     # solving logic
     if len(solved_angles) is 2:
