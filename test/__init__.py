@@ -10,14 +10,11 @@ amount_of_decimal_places = 2
 
 import math
 import sys
+import time
 from decimal import *
 
-
-def simplify_number(num):
-    """converts floats with no decimal places to ints"""
-    if float(num).is_integer():
-        return int(num)
-    return num
+# start timer
+start_time = time.time()
 
 
 def generate_string(char, num):
@@ -27,32 +24,36 @@ def generate_string(char, num):
 
 def process(var):
     """rounds number and converts to string"""
-    return str(round(var, amount_of_decimal_places))
+    simplified = float(str('%f' % round(float(var), amount_of_decimal_places)).rstrip('0').rstrip('.'))
+    if simplified.is_integer():
+        return int(simplified)
+    else:
+        return simplified
 
 
 def cacl_amount_of_space(str_base, var, div):
     """calculates the amount of space before a value un order for its position to stay fixed relative to the triangle"""
-    return str_base[0:max(0, int(len(str_base) - int(len(str(int(round(var * int(10 ** (abs(Decimal(process(var)).as_tuple().exponent))), 0)))) / div)))]
+    return str_base[0:max(0, int(len(str_base) - int(len(str(int(round(float(var) * int(10 ** (abs(Decimal(process(var)).as_tuple().exponent))), 0)))) / div)))]
 
 
 def print_triangle():
     """prints the triangle with values"""
-    str_base = generate_string(" ", max(3, len(process(b))+1))
-    amount_of_lines = len(str(process(a)))+6
+    str_base = generate_string(" ", max(3, len(str(b))+1))
+    amount_of_lines = len(str(a))+6
     inner_space_str = generate_string(" ", amount_of_lines)
 
-    print(cacl_amount_of_space(str_base, A, 2) + process(A))
+    print(cacl_amount_of_space(str_base, A, 2) + str(A))
 
     for num in range(0, int((amount_of_lines/2))):
         print(str_base+"|"+inner_space_str[:num]+"\\")
 
-    print(str(cacl_amount_of_space(str_base[0:2], a, 1)) + process(b) + " |" + inner_space_str[:int(amount_of_lines / 2)] + "\\ " + process(c))
+    print(str(cacl_amount_of_space(str_base[0:2], a, 1)) + str(b) + " |" + inner_space_str[:int(amount_of_lines / 2)] + "\\ " + str(c))
 
     for num in range(int((amount_of_lines/2)+1), amount_of_lines):
         print(str_base + "|"+inner_space_str[:num]+"\\")
 
     print(str_base+"|"+generate_string("_", amount_of_lines)+"\\")
-    print(cacl_amount_of_space(str_base, C, 1) + process(C) + "    " + process(a) + "    " + process(B))
+    print(cacl_amount_of_space(str_base, C, 1) + str(C) + "    " + str(a) + "    " + str(B))
 
     return
 #
@@ -60,9 +61,9 @@ def print_triangle():
 #
 A = 0
 a = 0
-B = 90
+B = 0
 b = 0
-C = 0
+C = 90
 c = 0
 # a = c*math.sin(A)
 # a = b/math.tan(A)
@@ -71,19 +72,17 @@ c = 0
 def solve_triangle(values):
     """calculates the missing value of the triangle"""
     value_keys = list(values.keys())
-    angle_names = ["A", "B", "C"]
-    side_names = ["a", "b", "c"]
+    angle_names = ["C", "B", "A"]
+    side_names = ["c", "b", "a"]
     solved_angles = {"C": 90}
     solved_sides = {}
 
     def define_variable(var, value):
         globals()[var] = value
-        if key in angle_names:
-            nonlocal solved_angles
-            solved_angles[key] = key_value
-        elif key in side_names:
-            nonlocal solved_sides
-            solved_sides[key] = key_value
+        if var in angle_names:
+            solved_angles[var] = value
+        elif var in side_names:
+            solved_sides[var] = value
         else:
             # stops program
             sys.exit("\'" + key + "\' is not a valid variable name")
@@ -93,24 +92,31 @@ def solve_triangle(values):
         key_list = list(solved_angles.keys())
         for var in angle_names:
             if var not in solved_angles:
-                define_variable(var, solved_angles.get(key_list[0]) - solved_angles.get(key_list[1]))
+                define_variable(var, abs(solved_angles.get(key_list[0]) - solved_angles.get(key_list[1])))
 
     def finish_side_solve():
         key_list = list(solved_sides.keys())
         for var in side_names:
             if var not in solved_sides:
                 if var is "c":
-                    define_variable(var, simplify_number(math.sqrt(solved_sides.get(key_list[0])**2 + solved_sides.get(key_list[1])**2)))
+                    define_variable(var, math.sqrt(solved_sides.get(key_list[0])**2 + solved_sides.get(key_list[1])**2))
                 else:
-                    define_variable(var, simplify_number(math.sqrt(abs(solved_sides.get(key_list[0])**2 - solved_sides.get(key_list[1])**2))))
+                    define_variable(var, math.sqrt(abs(solved_sides.get(key_list[0])**2 - solved_sides.get(key_list[1])**2)))
 
-    def solve_side_with_angles():
-        print("")
+    def solve_sides_with_angles():
+        key_list = list(solved_sides.keys())
+        for var in side_names:
+            if var not in solved_sides:
+                if var is "c":
+                    define_variable(var, solved_sides.get(key_list[0]) / math.sin(math.radians(globals()[key_list[0].upper()])))
+                else:
+                    define_variable(var, globals()["c"] * math.sin(math.radians(globals()[var.upper()])))
 
-    def solve_angle_with_sides():
+
+    def solve_angles_with_sides():
         for var in angle_names:
             if var not in solved_angles:
-                define_variable(var, math.sin(globals()[var.lower()]/globals()["c"]))
+                define_variable(var, math.degrees(math.asin(globals()[var.lower()]/globals()["c"])))
 
     # checks to see if info given is valid
     for key in values:
@@ -124,12 +130,19 @@ def solve_triangle(values):
     # solving logic
     if len(solved_angles) is 2:
         finish_angle_solve()
+        if len(solved_sides) is 1:
+            solve_sides_with_angles()
     if len(solved_sides) is 2:
         finish_side_solve()
+    if len(solved_sides) is 3:
         if len(solved_angles) is 1:
-            solve_angle_with_sides()
-            finish_angle_solve()
+            solve_angles_with_sides()
 
+    for var in solved_angles:
+        globals()[var] = process(solved_angles.get(var))
+    for var in solved_sides:
+        globals()[var] = process(solved_sides.get(var))
 
-solve_triangle({"b": 4, "c": 5})
+solve_triangle({"A": 53.13, "b": 5})
 print_triangle()
+print("Execution took: %s seconds" % (time.time() - start_time))
