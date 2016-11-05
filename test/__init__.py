@@ -85,7 +85,7 @@ def solve_triangle(values):
             solved_sides[var] = value
         else:
             # stops program
-            sys.exit("\'" + key + "\' is not a valid variable name")
+            sys.exit("'" + key + "' is not a valid variable name")
 
     # define methods for multiple calls
     def finish_angle_solve():
@@ -112,7 +112,6 @@ def solve_triangle(values):
                 else:
                     define_variable(var, globals()["c"] * math.sin(math.radians(globals()[var.upper()])))
 
-
     def solve_angles_with_sides():
         for var in angle_names:
             if var not in solved_angles:
@@ -127,15 +126,24 @@ def solve_triangle(values):
         else:
             define_variable(key, key_value)
 
+
+    if "c" in solved_sides:
+        key_list = list(solved_sides.keys())
+        for var in solved_sides:
+            if var is not "c" and solved_sides.get(var) > solved_sides.get(key_list[key_list.index("c")]):
+                sys.exit("('" + var + "' = " + str(solved_sides.get(var)) + ") cannot be greater than the hypotenuse: ('c' = " + str(solved_sides.get(key_list[key_list.index("c")])) + ")")
+
+
     # solving logic
     if len(solved_angles) is 2:
         finish_angle_solve()
-        if len(solved_sides) is 1:
+    if len(solved_angles) is 3:
+        if len(solved_sides) <= 0:
             solve_sides_with_angles()
     if len(solved_sides) is 2:
         finish_side_solve()
     if len(solved_sides) is 3:
-        if len(solved_angles) is 1:
+        if len(solved_angles) <= 1:
             solve_angles_with_sides()
 
     for var in solved_angles:
@@ -143,6 +151,6 @@ def solve_triangle(values):
     for var in solved_sides:
         globals()[var] = process(solved_sides.get(var))
 
-solve_triangle({"A": 53.13, "b": 5})
+solve_triangle({"a": 30.23, "c": 23})
 print_triangle()
 print("Execution took: %s seconds" % (time.time() - start_time))
