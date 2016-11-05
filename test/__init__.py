@@ -13,8 +13,8 @@
 # set the angles or sides based on their letter
 # C is already set to 90 (right angle)
 values_dict = {
-    "A": 53.13,
-    "c": 5,
+    "A": 36.87,
+    "b": 4,
 }
 #
 # set amount of decimal places in answers
@@ -150,10 +150,12 @@ def solve_triangle(values):
         for var in solved_sides:
             if var is not "c" and solved_sides.get(var) > solved_sides.get(key_list[key_list.index("c")]):
                 sys.exit("('" + var + "' = " + str(solved_sides.get(var)) + ") cannot be greater than the hypotenuse: ('c' = " + str(solved_sides.get(key_list[key_list.index("c")])) + ")")
-    if len(solved_sides) is 3:
-        if sum(solved_sides.values()) is not 180:
+
+    if len(solved_angles) is 3:
+        if sum(solved_angles.values()) is not 180:
             # stops program
-            sys.exit("the sum of the angles must 180")
+            sys.exit("the sum of the angles must be 180")
+
     # solving logic
     if len(solved_angles) is 2:
         finish_angle_solve()
@@ -171,6 +173,8 @@ def solve_triangle(values):
     for var in solved_sides:
         globals()[var] = process(solved_sides.get(var))
 
+
 solve_triangle(values_dict)
+print("Execution took: %s seconds" % (time.time() - start_time))
 print_triangle()
 print("Execution took: %s seconds" % (time.time() - start_time))
