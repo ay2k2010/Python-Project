@@ -138,12 +138,12 @@ def solve_triangle(values):
     if len(solved_angles) is 2:
         finish_angle_solve()
     if len(solved_angles) is 3:
-        if len(solved_sides) <= 0:
+        if len(solved_sides) <= 2:
             solve_sides_with_angles()
     if len(solved_sides) is 2:
         finish_side_solve()
     if len(solved_sides) is 3:
-        if len(solved_angles) <= 1:
+        if len(solved_angles) <= 2:
             solve_angles_with_sides()
 
     for var in solved_angles:
@@ -151,6 +151,6 @@ def solve_triangle(values):
     for var in solved_sides:
         globals()[var] = process(solved_sides.get(var))
 
-solve_triangle({"a": 30.23, "c": 23})
+solve_triangle({"A": 53.13, "c": 5})
 print_triangle()
 print("Execution took: %s seconds" % (time.time() - start_time))
