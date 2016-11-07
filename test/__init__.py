@@ -13,13 +13,12 @@
 # set the angles or sides based on their letter
 # C is already set to 90 (right angle)
 values_dict = {
-    "A": 36.87,
+    "A": 36.869898,
     "b": 4,
 }
 #
 # set amount of decimal places in answers
 amount_of_decimal_places = 2
-#
 # --------------------------------------------- #
 
 import math
