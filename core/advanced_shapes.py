@@ -4,7 +4,6 @@ displayObjects = []
 
 keyEventObjects = []
 clickEventObjects = []
-mouseEventObjects = []
 tickEventObjects = []
 
 
@@ -19,14 +18,11 @@ class AdvancedShape(object):
     def click_event(self, click_event):
         raise NotImplementedError("click_event method not implemented")
 
-    def mouse_event(self, mouse_event):
-        raise NotImplementedError("mouse_event method not implemented")
-
     def tick_event(self):
         raise NotImplementedError("tick_event method not implemented")
 
 
-def add_object(object, using_key_event=False, using_click_event=False, using_mouse_event=False, using_tick_event=False):
+def add_object(object, using_key_event=False, using_click_event=False, using_tick_event=False):
     """adds object to the appropriate event lists as well as adding it to the window"""
 
     displayObjects.append(object)
@@ -36,9 +32,6 @@ def add_object(object, using_key_event=False, using_click_event=False, using_mou
 
     if using_click_event:
         clickEventObjects.append(object)
-
-    if using_mouse_event:
-        mouseEventObjects.append(object)
 
     if using_tick_event:
         tickEventObjects.append(object)
@@ -66,11 +59,6 @@ def loop(frames_per_second=30):
         if click_event is not None:
             for object in clickEventObjects:
                 object.click_event(click_event)
-
-        if window.mouseX is not None and window.mouseY is not None:
-            mouse_event = Point(window.mouseX, window.mouseY)
-            for object in mouseEventObjects:
-                object.mouse_event(mouse_event)
 
         for object in tickEventObjects:
             object.tick_event()

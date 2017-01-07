@@ -23,8 +23,12 @@ class ColourSquare(AdvancedShape):
         elif key_event == "d":
             self.square.move(5, 0)
 
+    def click_event(self, click_event):
+        self.square.move(click_event.getX() - self.square.getCenter().getX(),
+                         click_event.getY() - self.square.getCenter().getY())
+
     def tick_event(self):
-        self.square.setFill(random.choice(["blue", "red", "green", "orange", "purple"]))
+        self.square.setFill(random.choice(["blue", "red", "green", "yellow", "purple", "teal"]))
 
 
 
