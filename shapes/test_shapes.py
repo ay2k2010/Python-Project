@@ -3,6 +3,7 @@ from libs.graphics import *
 import random
 import math
 
+
 class ColourSquare(AdvancedShape):
 
     def __init__(self, position, size):
@@ -29,6 +30,7 @@ class ColourSquare(AdvancedShape):
 
     def tick_event(self):
         self.square.setFill(random.choice(["blue", "red", "green", "yellow", "purple", "teal"]))
+
 
 class Spaceship(AdvancedShape):
 
