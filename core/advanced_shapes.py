@@ -9,7 +9,7 @@ tickEventObjects = []
 
 class AdvancedShape(object):
 
-    def display(self):
+    def display(self, window):
         raise NotImplementedError("display method not implemented")
 
     def key_event(self, key_event):
