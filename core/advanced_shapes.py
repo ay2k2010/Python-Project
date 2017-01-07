@@ -40,7 +40,7 @@ def add_object(object, using_key_event=False, using_click_event=False, using_tic
 def loop(frames_per_second=30):
     """creates a window begins a loop that will update the window based on events and objects"""
 
-    window = GraphWin()
+    window = GraphWin("Test", 640, 480)
     is_running = True
 
     for object in displayObjects:
