@@ -91,5 +91,22 @@ class Spaceship(AdvancedShape):
         self.triangle.draw(self.window)
 
 
+class Face(AdvancedShape):
 
+    def __init__(self, position, size):
+        self.position = position
+        self.size = size
+        self.left_eye = Circle(Point(self.position.getX() - self.size / 4, self.position.getY() - self.size / 3), self.size / 15)
+        self.right_eye = Circle(Point(self.position.getX() + self.size / 4, self.position.getY() - self.size / 3), self.size / 15)
+        self.left_eye.setFill("black")
+        self.right_eye.setFill("black")
+
+    def display(self, window):
+        Circle(self.position, self.size).draw(window)
+        Circle(Point(self.position.getX() - self.size / 4, self.position.getY() - self.size / 3), self.size / 6).draw(window)
+        Circle(Point(self.position.getX() + self.size / 4, self.position.getY() - self.size / 3), self.size / 6).draw(window)
+        Line(Point(self.position.getX() - self.size / 2, self.position.getY() + self.size / 3),
+             Point(self.position.getX() + self.size / 2, self.position.getY() + self.size / 3)).draw(window)
+        self.left_eye.draw(window)
+        self.right_eye.draw(window)
 
