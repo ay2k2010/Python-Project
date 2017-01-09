@@ -1,6 +1,6 @@
 # ==============================================================================================================
-# Python file that adds a simple was for objects to be drawn on screen using graphics.py library
-# It adds an easy way na object to rendered and to respond to events with extra features like stable frame rate
+# Python file that adds a simple core for objects to be drawn on screen using the graphics.py library
+# It adds an easy way for an object to rendered and to respond to events with extra features like frame rate
 # ==============================================================================================================
 # AdvancedShape
 # - - - - - - -
@@ -32,15 +32,19 @@ tickEventObjects = []
 class AdvancedShape(object):
     """abstract class for all shape object displayed in window allowing for event updates"""
     def display(self, window):
+        """called once at the beginning of the program"""
         raise NotImplementedError("display method not implemented")
 
     def key_event(self, key_event):
+        """called anytime a key is pressed (only one key detected at a time)"""
         raise NotImplementedError("key_event method not implemented")
 
     def click_event(self, click_event):
+        """called every time the mouse left clicks"""
         raise NotImplementedError("click_event method not implemented")
 
     def tick_event(self):
+        """called at the end of every cycle or loop"""
         raise NotImplementedError("tick_event method not implemented")
 
 

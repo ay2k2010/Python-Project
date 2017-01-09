@@ -10,12 +10,12 @@
 # Spaceship
 # - - - - -
 # the spaceship is a little more complicated...
-# to find out more information on how it works look inside the calls for more detailed comments
+# to find out more information on how it works look inside the class for more detailed comments
 # to simplify things the space ship responds to the arrow keys as movement controls
 # Left and Right rotate the triangle(spaceship) to face multiple directions
 # Up will move the space ship forward in the direction it is facing
 # the spaceship has inertia meaning it will keep going in that direction unless an opposite force is applied
-# the Down keu will slowly bring spaceship to stop no matter what direction is it currently facing
+# the Down key will slowly bring the spaceship to a stop no matter what direction is it currently facing
 # --------------------------------------------------------------------------------------------------------------
 # Face
 # - -
@@ -37,11 +37,11 @@ class ColourSquare(AdvancedShape):
         self.square = Rectangle(Point(position.getX() - size, position.getY() - size),
                                 Point(position.getX() + size, position.getY() + size))
 
-    # first draw object
+    # first draw  of object
     def display(self, window):
         self.square.draw(window)
 
-    # every time key is pressed method will check for these key and move square
+    # every time key is pressed method will check for these keys and move square
     def key_event(self, key_event):
         if key_event == "w":
             self.square.move(0, -5)
@@ -64,7 +64,7 @@ class ColourSquare(AdvancedShape):
 
 class Spaceship(AdvancedShape):
 
-    # based on parameters calculates and stores different variables required for the Spaceship to work
+    # based on parameters it creates, calculates and stores different variables required for the Spaceship to work
     def __init__(self, position, size, acceleration=1, deceleration=2, rotate_speed=10, max_speed=5):
         self.speed_x = 0
         self.speed_y = 0
@@ -83,7 +83,7 @@ class Spaceship(AdvancedShape):
         self.window = window
         self.triangle.draw(self.window)
 
-    # checks if arrow key pressed and rotates it or through calculations decides how much the speed must change
+    # checks if arrow key pressed and rotates it or through calculations decides how much the speed has to change
     def key_event(self, key_event):
         if key_event == "Left":
             self._rotate(-self.rotate_speed)
@@ -93,26 +93,24 @@ class Spaceship(AdvancedShape):
             self.speed_x += min(math.cos(math.radians(self.rotation)) * self.acceleration, self.max_speed)
             self.speed_y += min(math.sin(math.radians(self.rotation)) * self.acceleration, self.max_speed)
         elif key_event == "Down":
-            abs_speed_x = abs(self.speed_x)
-            abs_speed_y = abs(self.speed_y)
-            total_speed = abs_speed_x + abs_speed_y + 1
+            total_speed = abs(self.speed_x) + abs(self.speed_y) + 1
             self.speed_x -= self.speed_x / total_speed * self.deceleration
             self.speed_y -= self.speed_y / total_speed * self.deceleration
 
-    # every tick updates tingle position based on movement direction
+    # every tick updates triangle position based on movement direction
     def tick_event(self):
         self.triangle.move(self.speed_x, self.speed_y)
         self.position = Point(self.position.getX() + self.speed_x, self.position.getY() + self.speed_y)
 
-    # lovely trigonometry to draw triangle from scratch
+    # lovely trigonometry to find 1 point of 1 axis of the triangle
     def _calculate_point_pos_cos(self, angle):
         return math.cos(math.radians(self.rotation + angle))*self.size
 
-    # lovely trigonometry to draw triangle from scratch
+    # lovely trigonometry to find 1 point of 1 axis of the triangle
     def _calculate_point_pos_sin(self, angle):
         return math.sin(math.radians(self.rotation + angle))*self.size
 
-    # uses the previous functions to generate 3 points that make up triangle
+    # uses the previous functions to generate 3 points that make up triangle from scratch
     def _create_triangle(self):
         return Polygon(Point(self.position.getX() + self._calculate_point_pos_cos(135),
                              self.position.getY() + self._calculate_point_pos_sin(135)),
