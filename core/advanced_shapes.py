@@ -1,24 +1,31 @@
 # ==============================================================================================================
+#                           ▀▀█▀▀ ▒█░▒█ ▒█▀▀▀ 　 ▒█▀▀█ ▒█▀▀▀█ ▒█▀▀█ ▒█▀▀▀
+#                           ░▒█░░ ▒█▀▀█ ▒█▀▀▀ 　 ▒█░░░ ▒█░░▒█ ▒█▄▄▀ ▒█▀▀▀
+#                           ░▒█░░ ▒█░▒█ ▒█▄▄▄ 　 ▒█▄▄█ ▒█▄▄▄█ ▒█░▒█ ▒█▄▄▄
+# ==============================================================================================================
 # Python file that adds a simple core for objects to be drawn on screen using the graphics.py library
-# It adds an easy way for an object to rendered and to respond to events with extra features like frame rate
+# It adds an easy way for an object to rendered and to respond to events along with extra features
 # ==============================================================================================================
 # AdvancedShape
 # - - - - - - -
 # all shape objects that want to be a part of the loop and event system must extend/implement this class
 # provides simple methods that will be called from any object that subscribes to that event
+# examples ate in the shapes.test_shapes.py file
 # --------------------------------------------------------------------------------------------------------------
 # add_object
 # - - - - -
 # any shape object must be passed trough this function prior to activating the loop
 # add_object's first parameter is the object and is required
 # next parameters are boolean which allow the object to subscribe to different events (default is False)
+# examples ate in the core.__init__.py file
 # --------------------------------------------------------------------------------------------------------------
 # loop
 # - -
 # the loop function starts the whole system by creating the graphics window
-# the loop then cycles(or loops) x(first parameter) amounts per second (default 30)
-# the loop check if an event occurred and notifies the objects subscribed to it.
-# loop will eventually crash when window is exited
+# the loop then cycles(or loops) x amounts per second
+# x is determined by first parameter ex. 'loop(20)' or if no parameters are given the default is 30
+# the loop checks if an event occurred and notifies the objects subscribed to that event through add_object
+# loop will crash when window is exited (known bug)
 # ==============================================================================================================
 from libs.graphics import *
 
