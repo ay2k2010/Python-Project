@@ -1,3 +1,4 @@
+# THIS IS A TEST CLASS, ANYONE CAN ADD EXTRA SHAPES HERE TO TEST, OR CREATE A NEW DEDICATED FILE IN THIS PACKAGE
 # ==============================================================================================================
 # Python file containing test shapes used as examples in order to showcase the bare bones capability of the core
 # ==============================================================================================================
