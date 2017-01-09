@@ -1,11 +1,26 @@
+# ==============================================================================================================
+#     __________ ____ __________    ______________ ___ .___  _________ ___________.___.____     ___________
+#     \______   \    |   \      \   \__    ___/   |   \|   |/   _____/ \_   _____/|   |    |    \_   _____/
+#      |       _/    |   /   |   \    |    | /    ~    \   |\_____  \   |    __)  |   |    |     |    __)_
+#      |    |   \    |  /    |    \   |    | \    Y    /   |/        \  |     \   |   |    |___  |        \
+#      |____|_  /______/\____|__  /   |____|  \___|_  /|___/_______  /  \___  /   |___|_______ \/_______  /
+#             \/                \/                  \/             \/       \/                \/        \/
+# ==============================================================================================================
+# Python file that contains all of the initialization functions
+# this is the file that must be run in order for the program to work
+# it simply contains a test function that adds 3 test shapes to the program and then starts the loop
+# ==============================================================================================================
 from core.advanced_shapes import *
 from shapes.test_shapes import *
 
 
 def test_shapes():
+    """adds test shapes to window"""
     add_object(ColourSquare(Point(20, 20), 10), True, True, True)
     add_object(Spaceship(Point(50, 50), 10, 0.1, 0.4, 8, 0.3), True, False, True)
     add_object(Face(Point(150, 150), 25))
 
+# call test function
 test_shapes()
-loop()
+# start loop and display window with parameter being frames per second
+loop(20)

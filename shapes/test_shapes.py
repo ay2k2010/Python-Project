@@ -1,3 +1,28 @@
+# ==============================================================================================================
+# Python file containing test shapes used as examples in order to showcase the bare bones capability of the core
+# ==============================================================================================================
+# ColourSquare
+# - - - - - -
+# every tick the square's colour randomly changes to one of 6 present colours
+# on key event the square will respond to 'w', 'a', 's' and 'd' as movement controls
+# on click event square will teleport to mouse click position
+# --------------------------------------------------------------------------------------------------------------
+# Spaceship
+# - - - - -
+# the spaceship is a little more complicated...
+# to find out more information on how it works look inside the calls for more detailed comments
+# to simplify things the space ship responds to the arrow keys as movement controls
+# Left and Right rotate the triangle(spaceship) to face multiple directions
+# Up will move the space ship forward in the direction it is facing
+# the spaceship has inertia meaning it will keep going in that direction unless an opposite force is applied
+# the Down keu will slowly bring spaceship to stop no matter what direction is it currently facing
+# --------------------------------------------------------------------------------------------------------------
+# Face
+# - -
+# probably the simplest object which does not respond to any events
+# the Face will simply be drawn at any size you want
+# be prepared because my face drawing skill are horrible
+# ==============================================================================================================
 from core.advanced_shapes import *
 from libs.graphics import *
 import random
