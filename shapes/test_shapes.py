@@ -25,9 +25,9 @@
 # --------------------------------------------------------------------------------------------------------------
 # Translator
 # - - - - -
-# the Translator simple translates a english phase to french
-# to enable typing in it press Right Control and to disable typing press it again
-# to translate phrase press Enter
+# the Translator simply translates an English phase into French
+# to enable typing in it press Right Control, and to disable it press it again
+# to translate a typed phrase press Enter
 # more comments on how it actually works can be found in it's class
 # ==============================================================================================================
 from core.advanced_shapes import *
@@ -171,7 +171,7 @@ class Translator(AdvancedShape):
         self.in_text.draw(window)
         self.out_text.draw(window)
 
-    # checks if it is selected and then reacts accordingly
+    # checks if it is selected and then reacts accordingly by adding text ot input or translating
     def key_event(self, key_event):
         if key_event == "Control_L":
             self.selected = not self.selected
