@@ -163,7 +163,7 @@ class Translator(AdvancedShape):
     # creates and stores two Text objects, one for input and one for output
     def __init__(self, position, width):
         self.in_text = Text(Point(position.x, position.y + 10), "")
-        self.out_text = Text(Point(position.x, position.y - 10), "Testing")
+        self.out_text = Text(Point(position.x, position.y - 10), "Enter Text")
         self.selected = False
 
     # simply draws the Text
