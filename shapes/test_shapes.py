@@ -211,6 +211,19 @@ class Translator(AdvancedShape):
             "backslash": "\\",
             "bar": "|",
             "asciitilde": "~",
+            "exclam": "!",
+            "at": "@",
+            "numbersign": "#",
+            "dollar": "$",
+            "percent": "%",
+            "asciicircum": "^",
+            "asterisk": "*",
+            "parenleft": "(",
+            "parenright": ")",
+            "minus": "-",
+            "plus": "+",
+            "equal": "=",
+            "underscore": "_",
         }
         if key_event in key_dict.keys():
             return key_dict.get(key_event)
