@@ -269,7 +269,7 @@ class Translator(AdvancedShape):
                      .NET CLR 3.0.04506.30\
                      )"}
 
-        request = urllib.request.Request(("http://translate.google.com/m?hl=fr&sl=en&q=" + text).replace(" ", "+"),
+        request = urllib.request.Request(("http://translate.google.com/m?sl=en&hl=fr&q=" + text).replace(" ", "+"),
                                          headers=agent)
         raw_data = urllib.request.urlopen(request).read()
 
