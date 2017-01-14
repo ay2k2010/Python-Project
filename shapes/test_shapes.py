@@ -27,6 +27,8 @@ from core.advanced_shapes import *
 from libs.graphics import *
 import random
 import math
+import urllib.request
+import re
 
 
 class ColourSquare(AdvancedShape):
@@ -148,3 +150,89 @@ class Face(AdvancedShape):
         self.left_eye.draw(window)
         self.right_eye.draw(window)
 
+
+class Translator(AdvancedShape):
+
+    def __init__(self, position, width):
+        self.in_text = Text(Point(position.x, position.y + 10), "")
+        self.out_text = Text(Point(position.x, position.y - 10), "Testing")
+        self.selected = False
+
+    def display(self, window):
+        self.in_text.draw(window)
+        self.out_text.draw(window)
+
+    def key_event(self, key_event):
+        if key_event == "Control_L":
+            self.selected = not self.selected
+        if self.selected:
+            if key_event == "Return":
+                self.out_text.setText(self._translate(self.in_text.getText()))
+            elif key_event == "BackSpace":
+                self.in_text.setText(self.in_text.getText()[0:len(self.in_text.getText()) - 1])
+            else:
+                self.in_text.setText(self.in_text.getText() + self._key_parse(key_event))
+
+    @staticmethod
+    def _key_parse(key_event):
+        key_dict = {
+            "Shift_L": "",
+            "Shift_R": "",
+            "Control_L": "",
+            "Control_R": "",
+            "Caps_Lock": "",
+            "Delete": "",
+            "Up": "",
+            "Down": "",
+            "Left": "",
+            "Right": "",
+            "space": " ",
+            "period": ".",
+            "comma": ",",
+        }
+        if key_event in key_dict.keys():
+            return key_dict.get(key_event)
+        elif len(key_event) == 1:
+            return key_event
+
+    @staticmethod
+    def _translate(text):
+        """
+        For some code used from https://github.com/mouuff/mtranslate/blob/master/mtranslate/core.py (plz don't sue me)
+        MIT License
+        Copyright (c) 2016 Arnaud Aliès
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        """
+        agent = {'User-Agent':
+                     "Mozilla/4.0 (\
+                     compatible;\
+                     MSIE 6.0;\
+                     Windows NT 5.1;\
+                     SV1;\
+                     .NET CLR 1.1.4322;\
+                     .NET CLR 2.0.50727;\
+                     .NET CLR 3.0.04506.30\
+                     )"}
+
+        request = urllib.request.Request(("http://translate.google.com/m?hl=fr&sl=en&q=" + text).replace(" ", "+"),
+                                         headers=agent)
+        raw_data = urllib.request.urlopen(request).read()
+
+        data = raw_data.decode("utf-8")
+        expr = r'class="t0">(.*?)<'
+        re_result = re.findall(expr, data)
+        return re_result[0]
