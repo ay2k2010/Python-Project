@@ -200,11 +200,25 @@ class Translator(AdvancedShape):
             "space": " ",
             "period": ".",
             "comma": ",",
+            "question": "?",
+            "greater": ">",
+            "less": "<",
+            "semicolon": ";",
+            "colon": ":",
+            "quoteright": "'",
+            "quoteleft": "'",
+            "quotedbl": "\"",
+            "backslash": "\\",
+            "bar": "|",
+            "asciitilde": "~",
         }
         if key_event in key_dict.keys():
             return key_dict.get(key_event)
         elif len(key_event) == 1:
             return key_event
+
+        print("could not recognise: " + key_event)
+        return "�"
 
     @staticmethod
     # 87.5% of class is copied (hence the copyright notice)
