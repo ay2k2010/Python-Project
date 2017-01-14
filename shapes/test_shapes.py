@@ -160,15 +160,18 @@ class Face(AdvancedShape):
 
 class Translator(AdvancedShape):
 
+    # creates and stores two Text objects, one for input and one for output
     def __init__(self, position, width):
         self.in_text = Text(Point(position.x, position.y + 10), "")
         self.out_text = Text(Point(position.x, position.y - 10), "Testing")
         self.selected = False
 
+    # simply draws the Text
     def display(self, window):
         self.in_text.draw(window)
         self.out_text.draw(window)
 
+    # checks if it is selected and then reacts accordingly
     def key_event(self, key_event):
         if key_event == "Control_L":
             self.selected = not self.selected
@@ -180,6 +183,7 @@ class Translator(AdvancedShape):
             else:
                 self.in_text.setText(self.in_text.getText() + self._key_parse(key_event))
 
+    # method used to help convert words to symbols
     @staticmethod
     def _key_parse(key_event):
         key_dict = {
@@ -203,6 +207,9 @@ class Translator(AdvancedShape):
             return key_event
 
     @staticmethod
+    # 87.5% of class is copied (hence the copyright notice)
+    # it basically goes to a simplified version of google translate and using the url inputs the text
+    # it then reads the HTML page it receives and finds a specific div element that contains translation
     def _translate(text):
         """
         For some code used from https://github.com/mouuff/mtranslate/blob/master/mtranslate/core.py (plz don't sue me)
