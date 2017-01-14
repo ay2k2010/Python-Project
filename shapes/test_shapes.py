@@ -22,6 +22,13 @@
 # probably the simplest object which does not respond to any events
 # the Face will simply be drawn at any size you want
 # be prepared because my face drawing skill are horrible
+# --------------------------------------------------------------------------------------------------------------
+# Translator
+# - - - - -
+# the Translator simple translates a english phase to french
+# to enable typing in it press Right Control and to disable typing press it again
+# to translate phrase press Enter
+# more comments on how it actually works can be found in it's class
 # ==============================================================================================================
 from core.advanced_shapes import *
 from libs.graphics import *
