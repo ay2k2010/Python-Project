@@ -17,6 +17,7 @@ def test_shapes():
     add_object(Spaceship(Point(50, 50), 10, 0.1, 0.4, 8, 0.3), True, False, True)
     add_object(Face(Point(150, 150), 25))
     add_object(Translator(Point(250, 250), 10), using_key_event=True)
+    add_object(StickMan(Point(50, 400), 50))
 
 # call test function
 test_shapes()

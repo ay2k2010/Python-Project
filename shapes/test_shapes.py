@@ -162,8 +162,8 @@ class Translator(AdvancedShape):
 
     # creates and stores two Text objects, one for input and one for output
     def __init__(self, position, width):
-        self.in_text = Text(Point(position.x, position.y + 10), "")
-        self.out_text = Text(Point(position.x, position.y - 10), "Enter Text")
+        self.in_text = Text(Point(position.getX(), position.getY() + 10), "")
+        self.out_text = Text(Point(position.getX(), position.getY() - 10), "Enter Text")
         self.selected = False
 
     # simply draws the Text
@@ -277,3 +277,68 @@ class Translator(AdvancedShape):
         expr = r'class="t0">(.*?)<'
         re_result = re.findall(expr, data)
         return re_result[0]
+
+
+class StickMan(AdvancedShape):
+
+    pose_idle = [0.875, 0.125,
+                 0.35, 0.75,
+                 0.625,
+                 0.25, 0.375,
+                 0.25, 0.375,
+                 0.125, 0.225,
+                 0.125, 0,
+                 0.125, 0.225,
+                 0.125, 0
+                 ]
+
+    pose_walk_1 = [0.875, 0.125,
+                   0.35, 0.75,
+                   0.625,
+                   0.25, 0.375,
+                   0.25, 0.375,
+                   0, 0.2,
+                   0.125, 0.06,
+                   0.125, 0.225,
+                   0.125, 0
+                   ]
+
+    def __init__(self, position, size):
+        self.position = position
+        self.size = size
+        self.window = None
+
+    def display(self, window):
+        self.window = window
+        self._draw_stick_man(1)
+
+    def _draw_stick_man(self, pose_id):
+        pose = []
+        if pose_id == 0:
+            pose = self.pose_idle
+        elif pose_id == 1:
+            pose = self.pose_walk_1
+
+        self.figure = [
+            Circle(Point(self.position.getX(), self.position.getY() - self.size * pose[0]), self.size * pose[1]),
+            Line(Point(self.position.getX(), self.position.getY() - self.size * pose[2]),
+                 Point(self.position.getX(), self.position.getY() - self.size * pose[3])),
+            Line(Point(self.position.getX(), self.position.getY() - self.size * pose[4]),
+                 Point(self.position.getX() - self.size * pose[5], self.position.getY() - self.size * pose[6])),
+            Line(Point(self.position.getX(), self.position.getY() - self.size * pose[4]),
+                 Point(self.position.getX() + self.size * pose[7], self.position.getY() - self.size * pose[8])),
+            Line(Point(self.position.getX(), self.position.getY() - self.size * pose[2]),
+                 Point(self.position.getX() - self.size * pose[9], self.position.getY() - self.size * pose[10])),
+            Line(Point(self.position.getX() - self.size * pose[9], self.position.getY() - self.size * pose[10]),
+                 Point(self.position.getX() - self.size * pose[11], self.position.getY() - self.size * pose[12])),
+            Line(Point(self.position.getX(), self.position.getY() - self.size * pose[2]),
+                 Point(self.position.getX() + self.size * pose[13], self.position.getY() - self.size * pose[14])),
+            Line(Point(self.position.getX() + self.size * pose[13], self.position.getY() - self.size * pose[14]),
+                 Point(self.position.getX() + self.size * pose[15], self.position.getY() - self.size * pose[16])),
+        ]
+
+        for shape in self.figure:
+            shape.draw(self.window)
+
+
+
