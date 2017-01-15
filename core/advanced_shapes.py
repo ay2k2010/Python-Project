@@ -82,8 +82,11 @@ def loop(frames_per_second=30):
     while is_running:
         start_time = time.time()
 
-        key_event = window.checkKey()
-        click_event = window.checkMouse()
+        try:
+            key_event = window.checkKey()
+            click_event = window.checkMouse()
+        except GraphicsError:
+            is_running = False
 
         if key_event != "":
             for object in keyEventObjects:
@@ -97,3 +100,5 @@ def loop(frames_per_second=30):
             object.tick_event()
 
         time.sleep(max(1 / frames_per_second - (time.time() - start_time), 0))
+
+    print("Loop successfully ended")

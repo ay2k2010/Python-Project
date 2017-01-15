@@ -23,3 +23,4 @@ def test_shapes():
 test_shapes()
 # start loop and display window with parameter being frames per second
 loop(20)
+quit()
