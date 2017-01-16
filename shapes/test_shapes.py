@@ -297,6 +297,17 @@ class StickMan(AdvancedShape):
                    0.625,
                    0.25, 0.375,
                    0.25, 0.375,
+                   0, 0.125,
+                   0.125, 0,
+                   0.125, 0.125,
+                   0.125, 0
+                   ]
+
+    pose_walk_2 = [0.875, 0.125,
+                   0.35, 0.75,
+                   0.625,
+                   0.25, 0.375,
+                   0.25, 0.375,
                    0, 0.2,
                    0.125, 0.06,
                    0.125, 0.225,
@@ -310,7 +321,7 @@ class StickMan(AdvancedShape):
 
     def display(self, window):
         self.window = window
-        self._draw_stick_man(1)
+        self._draw_stick_man(2)
 
     def _draw_stick_man(self, pose_id):
         pose = []
@@ -318,6 +329,8 @@ class StickMan(AdvancedShape):
             pose = self.pose_idle
         elif pose_id == 1:
             pose = self.pose_walk_1
+        elif pose_id == 2:
+            pose = self.pose_walk_2
 
         self.figure = [
             Circle(Point(self.position.getX(), self.position.getY() - self.size * pose[0]), self.size * pose[1]),
