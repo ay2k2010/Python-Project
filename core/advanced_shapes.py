@@ -10,7 +10,7 @@
 # - - - - - - -
 # all shape objects that want to be a part of the loop and event system must extend/implement this class
 # provides simple methods that will be called from any object that subscribes to that event
-# examples ate in the shapes.test_shapes.py file
+# examples are in the shapes.test_shapes.py file
 # --------------------------------------------------------------------------------------------------------------
 # add_object
 # - - - - -
