@@ -46,11 +46,3 @@ class CoolRect(AdvancedShape):
 
     def display(self, window):
         self.square.draw(window)
-
-
-
-
-
-
-
-
