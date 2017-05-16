@@ -20,7 +20,7 @@ def test_shapes():
     add_object(InputTextField(Point(400,400),4), True)
     add_object(CoolRect(Point(200,400),40),True, True)
     add_object(InputTextField(Point(200,400),4), True)
-    add_object(Translator(Point(200,500), 4), True)
+
 
 # call test function
 test_shapes()
