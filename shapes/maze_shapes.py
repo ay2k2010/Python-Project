@@ -82,7 +82,7 @@ class Maze(AdvancedShape):
 class MazeSolver(AdvancedShape):
 
     def __init__(self, start_pos, scale):
-        self.current_pos = Point(start_pos.getX() - scale / 2, start_pos.getY() - scale / 2)
+        self.current_pos = Point(start_pos.getX() + scale / 2, start_pos.getY() - scale / 2)
         self.scale = scale
         self.circle = Circle(self.current_pos, 2)
         self.circle.setFill("green")
