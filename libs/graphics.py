@@ -736,7 +736,7 @@ class Text(GraphicsObject):
         other.config = self.config.copy()
         return other
 
-    def setText(self, text):
+    def setText(self, text: object) -> object:
         self._reconfig("text", text)
 
     def getText(self):
