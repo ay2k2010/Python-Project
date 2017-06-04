@@ -1,5 +1,6 @@
 from core.advanced_shapes import *
 from libs.graphics import *
+from random import randint
 
 
 class Maze(AdvancedShape):
@@ -14,16 +15,18 @@ class Maze(AdvancedShape):
         self.scale = scale
         self.center = pos
         self.maze = []
-        self.horizontal_lines = [[0 for x in range(self.size-1)] for y in range(self.size)]
-        self.vertical_lines = [[0 for x in range(self.size)] for y in range(self.size-1)]
         self.window = None
-        self.pos = Point(int(self.size/2), int(self.size/2))
+        self.pos = Point(-1, -1)
         self.direction = self.up
-        self.level = 2
+        self.level = 1
+        self.reversed_rotation = False
+        self.direction_switched = 2
 
     def _generate_new_maze(self):
         self.maze = []
         self._create_start()
+        while self.level < self.size:
+            self._generate_part()
         self.draw()
 
     def _create_start(self):
@@ -41,29 +44,72 @@ class Maze(AdvancedShape):
             self.maze[i].draw(self.window)
 
     def _generate_part(self):
+
+        if self.direction_switched > 0:
+            self._possibly_switch_direction()
+
         if self.direction == self.up:
-            if self.pos.getY() - self.size/2 > self.level:
+            if self.pos.getY() < -self.level:
                 self._turn()
             else:
-                self.vertical_lines[self.pos.getX()][self.pos.getY() + 1] = 1
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(0, -1)))
+                self.pos.y -= 1
         elif self.direction == self.down:
-            if self.pos.getY() + self.size / 2 > self.level:
+            if self.pos.getY() > self.level:
                 self._turn()
+                self.level += 1
             else:
-                self.vertical_lines[self.pos.getX()][self.pos.getY() - 1] = 1
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(0, 1)))
+                self.pos.y += 1
         elif self.direction == self.left:
-            if self.pos.getX() - self.size / 2 > self.level:
+            if self.pos.getX() < -self.level:
                 self._turn()
             else:
-                self.horizontal_lines[self.pos.getX() + 1][self.pos.getY() ] = 1
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(-1, 0)))
+                self.pos.x -= 1
         elif self.direction == self.right:
-            if self.pos.getX() + self.size / 2 > self.level:
+            if self.pos.getX() > self.level:
                 self._turn()
             else:
-                self.horizontal_lines[self.pos.getX() - 1][self.pos.getY()] = 1
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(1, 0)))
+                self.pos.x += 1
+
+    def _possibly_switch_direction(self):
+        if randint(0, self.level * 10) == 0:
+            polarity = 1
+            if self.reversed_rotation:
+                polarity = -1
+            if self.direction == self.up:
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(-1*polarity, 0)))
+                self.pos.x -= 1*polarity
+                self.direction = self.down
+            elif self.direction == self.down:
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(1*polarity, 0)))
+                self.pos.x += 1*polarity
+                self.direction = self.up
+            elif self.direction == self.left:
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(0, 1*polarity)))
+                self.pos.y += 1*polarity
+                self.direction = self.right
+            elif self.direction == self.right:
+                self.maze.append(Line(self._pos_to_point(), self._pos_to_point(0, -1*polarity)))
+                self.pos.y -= 1*polarity
+                self.direction = self.left
+            self.level += 1
+            self.reversed_rotation = not self.reversed_rotation
+            self.direction_switched = 0
 
     def _turn(self):
-        pass
+        self.direction_switched += 1
+        if self.reversed_rotation:
+            self.direction -= 1
+            if self.direction == 0:
+                self.direction = 4
+        else:
+            self.direction = max(1, (self.direction + 1) % 5)
+
+    def _pos_to_point(self, add_x=0, add_y=0):
+        return Point(self.center.getX() + self.scale * (self.pos.getX() + add_x), self.center.getY() + self.scale * (self.pos.getY() + add_y))
 
     def click_event(self, click_event):
         pass
